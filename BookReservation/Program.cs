@@ -103,7 +103,7 @@ static async Task<IResult> ReserveBook(int id, string comment, BookDb db)
 
 
 // POST endpoint to remove a status of a book
-static async Task<IResult> RemoveReserveBook(int id, string comment, BookDb db)
+static async Task<IResult> RemoveReserveBook(int id, BookDb db)
 {
     var book = await db.Books.FindAsync(id);
 
@@ -112,7 +112,6 @@ static async Task<IResult> RemoveReserveBook(int id, string comment, BookDb db)
     if (book.Reserved) return TypedResults.BadRequest("Book available to reserve");
 
     book.Reserved = false;
-    book.Comment = comment; // Storing reservation comment
 
     await db.SaveChangesAsync();
 
